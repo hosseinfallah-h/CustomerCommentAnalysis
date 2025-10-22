@@ -157,23 +157,3 @@ GitHub @hosseinfallah-h
 
 
 ---
-
-### ✅ Summary of What This README Includes
-
-| Section | Purpose |
-|----------|----------|
-| 🔹 Intro | What the app does |
-| 🔹 Features | Key highlights |
-| 🔹 Tech Stack | Components used |
-| 🔹 Setup & Run | All exact commands |
-| 🔹 Folder Structure | Visual project map |
-| 🔹 Dataset Example | Example table |
-| 🔹 Embedded `.gitignore` | Clean repo config |
-| 🔹 Embedded `requirements.txt` | Minimal dependencies |
-| 🔹 Future Updates | 20 ready milestone ideas |
-| 🔹 License & Credits | Author info |
-
----
-
-Would you like me to make a **pre-formatted version with emoji section dividers and table of contents** (for automatic GitHub navigation)?  
-That makes it look like top trending repos’ READMEs.
