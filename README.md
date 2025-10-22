@@ -1,4 +1,3 @@
-````markdown
 # 📊 Customer Comment Analyzer — Local AI with Ollama
 
 Analyze customer comments about multiple products **locally** with AI — no internet required.
