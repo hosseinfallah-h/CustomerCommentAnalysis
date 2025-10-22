@@ -1,0 +1,45 @@
+# --- Python bytecode ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+*.env
+
+# --- System Files ---
+.DS_Store
+Thumbs.db
+
+# --- Editor & IDE ---
+.vscode/
+.idea/
+
+# --- Logs & Temp Files ---
+*.log
+*.tmp
+*.bak
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Datasets / Uploads ---
+uploads/
+outputs/
+*.xlsx
+*.csv
+
+# --- Cache & Databases ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Build / Dist ---
+build/
+dist/
+*.egg-info/

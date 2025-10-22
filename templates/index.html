@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Comment Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --primary-dark: #00a8b5;
+            --secondary: #7b61ff;
+            --dark: #0a0e17;
+            --dark-light: #131a2a;
+            --text: #e0e0e0;
+            --text-light: #a0aec0;
+            --accent: #ff2e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* ===== Static Glass Navbar ===== */
+        nav {
+            position: fixed;
+            top: 1rem;
+            right: 50%;
+            transform: translateX(50%);
+            width: 85%;
+            max-width: 900px;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px) saturate(200%);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== Main Glass Card ===== */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px) saturate(180%);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            padding: 2.5rem;
+            position: relative;
+            z-index: 10;
+            animation: breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                box-shadow: 0 0 25px rgba(0, 240, 255, 0.08);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+            }
+        }
+
+        /* === Animated Glow Border for Results === */
+        @keyframes liquidGlow {
+            0% {
+                border-image-source: linear-gradient(45deg, var(--primary), var(--secondary));
+            }
+
+            50% {
+                border-image-source: linear-gradient(135deg, var(--secondary), var(--accent));
+            }
+
+            100% {
+                border-image-source: linear-gradient(45deg, var(--primary), var(--secondary));
+            }
+        }
+
+        .glow-border {
+            border: 2px solid transparent;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-image-slice: 1;
+            animation: liquidGlow 5s linear infinite;
+            border-image-source: linear-gradient(45deg, var(--primary), var(--secondary));
+            backdrop-filter: blur(25px) saturate(180%);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .glow-border:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        /* === Clean Gradient Button (no spinning) === */
+        .glow-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #fff;
+            border-radius: 9999px;
+            font-weight: 600;
+            padding: 0.8rem 2.5rem;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .glow-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 23, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 9999;
+        }
+
+        #loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            border-top: 6px solid var(--primary);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center justify-center">
+
+    <!-- 🌊 Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- 🌐 Fixed Glass Navbar -->
+    <nav>
+        <div class="logo">
+            <div class="logo-img">AI</div>
+            <div class="logo-text">Comment Analyzer</div>
+        </div>
+        <div class="nav-links">
+            <a href="#">خانه</a>
+            <a href="#">درباره</a>
+            <a href="#">تماس</a>
+        </div>
+    </nav>
+
+    <!-- 📦 Main Content -->
+    <div class="content w-full max-w-3xl mt-40 glass shadow-2xl animate__animated animate__fadeInUp text-right">
+        <h1 class="text-4xl font-extrabold mb-6 text-cyan-400">📊 تحلیل نظرات مشتریان</h1>
+
+        <p class="mb-4 text-gray-300 leading-relaxed">
+            این پلتفرم برای تحلیل خودکار نظرات مشتریان طراحی شده است. کافیست فایل اکسل شامل نام محصول و نظرات کاربران را
+            بارگذاری کنید تا هوش مصنوعی گزارشی کوتاه به زبان فارسی تولید کند.
+        </p>
+
+        <form id="file-upload" method="post" enctype="multipart/form-data" action="/analyze"
+            class="border-2 border-dashed border-gray-600 rounded-2xl p-8 hover:border-cyan-400 transition mb-6">
+            <input type="file" name="file" class="w-full text-center text-gray-300">
+        </form>
+
+        <div class="text-center">
+            <button type="submit" form="file-upload" class="glow-btn">🚀 بارگذاری و شروع تحلیل</button>
+        </div>
+
+        {% if results %}
+        <div class="mt-10 animate__animated animate__fadeIn">
+            <h2 class="text-2xl font-bold text-cyan-300 mb-4">نتایج تحلیل:</h2>
+            <div class="space-y-6">
+                {% for product, summary in results.items() %}
+                <div class="p-6 glow-border">
+                    <h3 class="text-xl font-semibold text-white mb-2">{{ product }}</h3>
+                    <p class="text-gray-300 leading-relaxed">{{ summary }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <p class="mt-8 text-sm text-gray-400 text-center">
+            ساخته شده توسط <span class="text-cyan-400">@hosseinfallah_h</span>
+        </p>
+    </div>
+
+    <!-- 🔄 Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="text-center animate__animated animate__fadeIn">
+            <div class="spinner mb-4"></div>
+            <p class="text-cyan-400 text-lg font-bold">در حال تحلیل نظرات...</p>
+        </div>
+    </div>
+
+    <script>
+        // 🌌 Particles background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "color": { "value": "#00f0ff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 140, "color": "#7b61ff", "opacity": 0.3, "width": 1 },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } },
+                "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.5 } } }
+            },
+            "retina_detect": true
+        });
+
+        // Loader
+        const form = document.getElementById("file-upload");
+        const overlay = document.getElementById("loading-overlay");
+        form.addEventListener("submit", () => {
+            overlay.classList.add("active");
+        });
+    </script>
+
+</body>
+
+</html>
